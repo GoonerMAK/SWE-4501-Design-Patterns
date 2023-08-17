@@ -93,9 +93,14 @@ class FullTime extends Staff
         this.salary = salary;
     }
 
+    public void getSalary()
+    {
+        System.out.println("Full-Time employee salary: " + salary);
+    }
+
     @Override
     public String toString() {
-        return super.toString() + "  Salary: " + salary + "/=";
+        return super.toString();
     }
 }
 
@@ -117,9 +122,14 @@ class PartTime extends Staff
         this.ratePerHour = ratePerHour;
     }
 
+    public void getSalary()
+    {
+        System.out.println("Part-Time employee salary: " + ratePerHour*hoursWorked);
+    }
+
     @Override
     public String toString() {
-        return super.toString() + "  Salary: " + ratePerHour*hoursWorked + "/=";
+        return super.toString();
     }
 }
 
