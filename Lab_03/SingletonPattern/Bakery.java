@@ -1,17 +1,19 @@
-public class Quaso
+package SingletonPattern;
+
+class Croissant
 {
-    private static Quaso uniqueInstance;
+    private static Croissant uniqueInstance;
     private String flavor;
     private boolean isFresh;
 
-    private Quaso()
+    private Croissant()
     {
         isFresh = true;
     }
 
-    public static Quaso getInstance() {
+    public static Croissant getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new Quaso();
+            uniqueInstance = new Croissant();
         }
         return uniqueInstance;
     }
@@ -24,7 +26,7 @@ public class Quaso
         }
         else
         {
-            System.out.println("The Quaso is no longer fresh to set it as a new flavor.");
+            System.out.println("The Croissant is no longer fresh to set it as a new flavor.");
         }
     }
 
@@ -41,7 +43,7 @@ public class Quaso
         }
         else
         {
-            System.out.println("This Quaso is no longer fresh. Consider getting a new one.");
+            System.out.println("This Croissant is no longer fresh. Consider getting a new one.");
         }
     }
 
@@ -56,16 +58,20 @@ public class Quaso
         isFresh = false;
     }
 
+}
 
+
+public class Bakery
+{
     public static void main(String[] args)
     {
         // Setting Strawberry Flavour
-        Quaso strawberryCroissant = Quaso.getInstance();
+        Croissant strawberryCroissant = Croissant.getInstance();
         strawberryCroissant.setFlavor("Strawberry");
         System.out.println("Strawberry Croissant: " + strawberryCroissant.getFlavor());
 
         // Setting Chocolate Flavour
-        Quaso chocolateCroissant = Quaso.getInstance();
+        Croissant chocolateCroissant = Croissant.getInstance();
         chocolateCroissant.setFlavor("Chocolate");
 
         // Displaying flavors
@@ -75,7 +81,7 @@ public class Quaso
         strawberryCroissant.eat(); // Fresh, enjoy!
         chocolateCroissant.eat(); // Will it be Fresh?
 
-        Quaso plainCroissant = Quaso.getInstance();
+        Croissant plainCroissant = Croissant.getInstance();
         plainCroissant.setFlavor("Plain");
 
         plainCroissant.eat();
@@ -89,5 +95,4 @@ public class Quaso
         plainCroissant.describeCroissant();
 
     }
-
 }
