@@ -1,9 +1,4 @@
 /* The Interface: Hit */
-interface HitInterface
-{
-
-}
-
 interface Hit
 {
     int Damage();
@@ -110,37 +105,27 @@ interface Character
 
 class Wizard implements Character {
     @Override
-    public String GetCharacter() {
-        return "Wizard";
-    }
+    public String GetCharacter() { return "Wizard"; }
 }
 
 class Hero implements Character {
     @Override
-    public String GetCharacter() {
-        return "Hero";
-    }
+    public String GetCharacter() { return "Hero"; }
 }
 
 class Mage implements Character {
     @Override
-    public String GetCharacter() {
-        return "Mage";
-    }
+    public String GetCharacter() { return "Mage"; }
 }
 
 class Outlaw implements Character {
     @Override
-    public String GetCharacter() {
-        return "Outlaw";
-    }
+    public String GetCharacter() { return "Outlaw"; }
 }
 
 class Vigilante implements Character {
     @Override
-    public String GetCharacter() {
-        return "Vigilante";
-    }
+    public String GetCharacter() { return "Vigilante"; }
 }
 
 
