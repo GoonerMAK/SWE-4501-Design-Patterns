@@ -1,11 +1,13 @@
-import java.util.Objects;
+interface Prototype {
+    Croissant clone();
+}
 
-class Croissant implements Cloneable {
+class Croissant implements Prototype {
     private String flavor;
-    private boolean isFresh;
+    boolean isFresh;
 
     public Croissant() {
-        isFresh = true;
+        this.isFresh = true;
     }
 
     public void setFlavor(String flavor) {
@@ -37,42 +39,59 @@ class Croissant implements Cloneable {
         isFresh = false;
     }
 
-    @Override
     public Croissant clone() {
-        try {
-            return (Croissant) super.clone();
-        } catch (CloneNotSupportedException e) {
-            return null;
+        Croissant clone = new Croissant();
+        clone.setFlavor(this.getFlavor());
+        clone.isFresh = this.isFresh;
+        return clone;
+    }
+}
+
+class ChocolateCroissant extends Croissant {
+    private boolean hasChocolateChips;
+
+    public ChocolateCroissant() {
+        super(); // Call the constructor of the superclass (Croissant)
+        this.hasChocolateChips = false; // Default to no chocolate chips
+    }
+
+    // Additional constructor to set chocolate chip status
+    public ChocolateCroissant(boolean hasChocolateChips) {
+        super(); // Call the constructor of the superclass (Croissant)
+        this.hasChocolateChips = hasChocolateChips;
+    }
+
+    // Method to check if it has chocolate chips
+    public boolean hasChocolateChips() {
+        return hasChocolateChips;
+    }
+
+    // Method to add chocolate chips
+    public void addChocolateChips() {
+        if (super.isFresh) {
+            hasChocolateChips = true;
+            System.out.println("Chocolate chips added to the Chocolate Croissant.");
+        } else {
+            System.out.println("This Croissant is no longer fresh. Consider getting a new one.");
         }
     }
-}
 
-class Bakery {
-    public static void main(String[] args) {
-        Croissant prototypeCroissant = new Croissant();
-        prototypeCroissant.setFlavor("Original");
-
-        Croissant strawberryCroissant = prototypeCroissant.clone();
-        strawberryCroissant.setFlavor("Strawberry");
-
-        Croissant chocolateCroissant = prototypeCroissant.clone();
-        chocolateCroissant.setFlavor("Chocolate");
-
-        // Displaying flavors
-        System.out.println("Strawberry Croissant: " + strawberryCroissant.getFlavor());
-        System.out.println("Chocolate Croissant: " + chocolateCroissant.getFlavor());
-
-        strawberryCroissant.eat(); // Fresh, enjoy!
-        chocolateCroissant.eat(); // Fresh, enjoy!
-
-        Croissant plainCroissant = prototypeCroissant.clone();
-        plainCroissant.setFlavor("Plain");
-
-        plainCroissant.eat(); // Fresh, enjoy!
-
-        // Describing croissants
-        strawberryCroissant.describeCroissant();
-        chocolateCroissant.describeCroissant();
-        plainCroissant.describeCroissant();
+    @Override
+    public void describeCroissant() {
+        super.describeCroissant(); // Call the describeCroissant method of the superclass
+        System.out.println("Has Chocolate Chips: " + (hasChocolateChips ? "Yes" : "No"));
     }
 }
+
+public class Bakery {
+    public static void main(String[] args) {
+        ChocolateCroissant chocoCroissant = new ChocolateCroissant();
+        chocoCroissant.setFlavor("Chocolate");
+        chocoCroissant.addChocolateChips();
+
+        System.out.println("Chocolate Croissant Flavor: " + chocoCroissant.getFlavor());
+        chocoCroissant.describeCroissant();
+    }
+}
+
+
