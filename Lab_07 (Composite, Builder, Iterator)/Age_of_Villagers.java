@@ -9,21 +9,22 @@ class Age_of_Villagers {
     {
         // Creating components
         HouseBuilder houseBuilder = new BuildHouse();
-        House house = houseBuilder.setType("Brick").build();
+        House brickHouse  = houseBuilder.setType("Brick").build();
 
         WaterSourceBuilder waterSourceBuilder = new BuildWaterSource();
-        WaterSource waterSource = waterSourceBuilder.setType("River").setCapacity("Wealthy Source").build();
+        WaterSource river  = waterSourceBuilder.setType("River").setCapacity("Wealthy Source").build();
 
         TreeBuilder treeBuilder = new BuildTree();
-        Tree tree = treeBuilder.setType("Mango").build();
+        Tree mangoTree  = treeBuilder.setType("Mango").build();
 
         // Creating the village
         Village village = new Village();
-        village.add(house);
-        village.add(waterSource);
-        village.add(tree);
+        village.add(brickHouse);
+        village.add(river);
+        village.add(mangoTree);
 
         System.out.println(village.getDescription());
+
     }
 }
 
@@ -76,8 +77,8 @@ class House implements VillageComponent
 
 
 class BuildHouse implements HouseBuilder {
-    private String type;
-    private String color;
+    private String type="";
+    private String color="";
 
     @Override
     public HouseBuilder setType(String type) {
@@ -94,6 +95,18 @@ class BuildHouse implements HouseBuilder {
     @Override
     public House build() {
         return new House(type, color);
+    }
+}
+
+class MudHouse extends House {
+    public MudHouse(String color) {
+        super("Mud House", color);
+    }
+}
+
+class BrickHouse extends House {
+    public BrickHouse(String color) {
+        super("Brick House", color);
     }
 }
 
@@ -167,6 +180,19 @@ class BuildWaterSource implements WaterSourceBuilder {
     }
 }
 
+class Well extends WaterSource {
+    public Well(String capacity) {
+        super("Well", capacity);
+    }
+}
+
+class River extends WaterSource {
+    public River(String capacity) {
+        super("River", capacity);
+    }
+}
+
+
 interface TreeBuilder {
     TreeBuilder setType(String type);
     TreeBuilder setHeight(String height);
@@ -233,6 +259,18 @@ class BuildTree implements TreeBuilder {
     @Override
     public Tree build() {
         return new Tree(type, height);
+    }
+}
+
+class PineTree extends Tree {
+    public PineTree(String height) {
+        super("Pine Tree", height);
+    }
+}
+
+class MangoTree extends Tree {
+    public MangoTree(String height) {
+        super("Mango Tree", height);
     }
 }
 
