@@ -3,7 +3,6 @@ public class StateCheck
     public static void main(String[] args)
     {
         Attacker paladin = new Paladin(new StandingByState());
-        paladin.getDescription();
 
         paladin.changeState(new EngagingState());        // Change state to ACTIVE
 
@@ -101,7 +100,8 @@ class StandingByState implements IdleState
 {
     @Override
     public void standBy(Attacker attacker) {
-        System.out.println(attacker.getCurrentStateName() + " is standing by.");
+        attacker.getDescription();
+        System.out.println(attacker.getCurrentStateName() + " --- standing by.\n");
     }
 
     @Override
@@ -115,7 +115,8 @@ class ObservingState implements ObserverState
 
     @Override
     public void observe(Attacker attacker) {
-        System.out.println(attacker.getCurrentStateName() + " is observing.");
+        attacker.getDescription();
+        System.out.println(attacker.getCurrentStateName() + " --- observing.\n");
     }
 
     @Override
@@ -128,7 +129,8 @@ class EngagingState implements AttackerState
 {
     @Override
     public void engage(Attacker attacker) {
-        System.out.println(attacker.getCurrentStateName() + " is engaging.");
+        attacker.getDescription();
+        System.out.println(attacker.getCurrentStateName() + " --- engaging.\n");
 
     }
 
