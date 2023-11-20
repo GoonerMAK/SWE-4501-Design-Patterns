@@ -70,98 +70,9 @@ interface Quackable extends Subject
 }
 
 
-class MallardDuck implements Quackable
+abstract class QuackableEntity implements Quackable
 {
     private List<Observer> observers = new ArrayList<>();
-
-    @Override
-    public String getDescription() {
-        return "I'm a Mallard duck";
-    }
-
-    @Override
-    public String quack() {
-        notifyObservers();
-        return "Quack quack...";
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers)
-        {
-            observer.update(this);
-        }
-    }
-
-}
-
-
-class RedheadDuck  implements Quackable
-{
-    private List<Observer> observers = new ArrayList<>();
-
-    @Override
-    public String getDescription() {
-        return "I'm a Redhead duck";
-    }
-
-    @Override
-    public String quack() {
-        notifyObservers();
-        return "Quack quack...";
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers)
-        {
-            observer.update(this);
-        }
-    }
-}
-
-
-class QuackyDuck implements Quackable
-{
-    private final Quackable decoratedQuacks;
-    private int quackCount = 0;
-    private List<Observer> observers = new ArrayList<>();
-
-    QuackyDuck(Quackable decoratedQuacks) {
-        this.decoratedQuacks = decoratedQuacks;
-    }
-
-    @Override
-    public String getDescription() {
-        return decoratedQuacks.getDescription() + " who quacks a lot";
-    }
-
-    @Override
-    public String quack() {
-        quackCount++;
-        notifyObservers();
-        return decoratedQuacks.quack() + "... more quack quack";
-    }
 
     @Override
     public void addObserver(Observer observer) {
@@ -178,6 +89,59 @@ class QuackyDuck implements Quackable
         for (Observer observer : observers) {
             observer.update(this);
         }
+    }
+}
+
+
+class MallardDuck extends QuackableEntity
+{
+    @Override
+    public String getDescription() {
+        return "I'm a Mallard duck";
+    }
+
+    @Override
+    public String quack() {
+        notifyObservers();
+        return "Quack quack...";
+    }
+}
+
+
+class RedheadDuck extends QuackableEntity
+{
+    @Override
+    public String getDescription() {
+        return "I'm a Redhead duck";
+    }
+
+    @Override
+    public String quack() {
+        notifyObservers();
+        return "Quack quack...";
+    }
+}
+
+
+class QuackyDuck extends QuackableEntity
+{
+    private final Quackable decoratedQuacks;
+    private int quackCount = 0;
+
+    QuackyDuck(Quackable decoratedQuacks) {
+        this.decoratedQuacks = decoratedQuacks;
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedQuacks.getDescription() + " who quacks a lot";
+    }
+
+    @Override
+    public String quack() {
+        quackCount++;
+        notifyObservers();
+        return decoratedQuacks.quack() + "... more quack quack";
     }
 
     public int getQuackCount() {
@@ -199,10 +163,9 @@ class Goose
 }
 
 
-class GooselikeDuck implements Quackable
+class GooselikeDuck extends QuackableEntity
 {
     private Goose goose;
-    private List<Observer> observers = new ArrayList<>();
 
     public GooselikeDuck(Goose goose)
     {
@@ -218,23 +181,6 @@ class GooselikeDuck implements Quackable
     public String quack() {
         notifyObservers();
         return goose.honk();
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update(this);
-        }
     }
 }
 
@@ -273,10 +219,9 @@ class CountingDuckFactory
 
 
 
-class Flock implements Quackable        // Composite class
+class Flock extends QuackableEntity        // Composite class
 {
     private List<Quackable> components = new ArrayList<>();
-    private List<Observer> observers = new ArrayList<>();
 
     public void add(Quackable component) {
         components.add(component);
@@ -305,23 +250,6 @@ class Flock implements Quackable        // Composite class
         }
         notifyObservers();
         return quacks.toString();
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update(this);
-        }
     }
 }
 
