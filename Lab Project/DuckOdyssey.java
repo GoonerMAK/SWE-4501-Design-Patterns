@@ -5,13 +5,17 @@ import java.util.List;
 public class DuckOdyssey {
     public static void main(String[] args) {
 
+        // Create duck factories
+        AbstractDuckFactory duckFactory = new DuckFactory();
+        AbstractDuckFactory countingDuckFactory = new CountingDuckFactory();
+
         // Create some ducks using a factory
-        Quackable mallardDuck = DuckFactory.createDuck("mallard");
-        Quackable redheadDuck = DuckFactory.createDuck("redhead");
+        Quackable mallardDuck = duckFactory.createMallardDuck();
+        Quackable redheadDuck = duckFactory.createRedheadDuck();
 
         // Create counting ducks using a counting duck factory
-        Quackable countingMallardDuck = CountingDuckFactory.createDuck("mallard");
-        Quackable countingRedheadDuck = CountingDuckFactory.createDuck("redhead");
+        Quackable countingMallardDuck = countingDuckFactory.createMallardDuck();
+        Quackable countingRedheadDuck = countingDuckFactory.createRedheadDuck();
 
         // Create a goose adapter
         Goose goose = new Goose();
@@ -26,13 +30,13 @@ public class DuckOdyssey {
         flock.add(gooselikeDuck);
 
         // Create Quack Enthusiasts to observe ducks
-        QuackEnthusiast quackEnthusiasts1 = new QuackEnthusiast(mallardDuck);
-        QuackEnthusiast quackEnthusiasts2 = new QuackEnthusiast(redheadDuck);
-        QuackEnthusiast quackEnthusiasts3 = new QuackEnthusiast(countingMallardDuck);
-        QuackEnthusiast quackEnthusiasts4 = new QuackEnthusiast(countingRedheadDuck);
-        QuackEnthusiast quackEnthusiasts5 = new QuackEnthusiast(gooselikeDuck);
+        QuackEnthusiast quackEnthusiast = new QuackEnthusiast(mallardDuck);
+        quackEnthusiast = new QuackEnthusiast(redheadDuck);
+        quackEnthusiast = new QuackEnthusiast(countingMallardDuck);
+        quackEnthusiast = new QuackEnthusiast(countingRedheadDuck);
+        quackEnthusiast = new QuackEnthusiast(gooselikeDuck);
 
-        System.out.println("Duck simulation:");
+        System.out.println("\nDuck simulation:");
         simulate(flock);
         simulate(countingMallardDuck);
 
@@ -185,36 +189,36 @@ class GooselikeDuck extends QuackableEntity
 }
 
 
-class DuckFactory
+
+interface AbstractDuckFactory
 {
-    public static Quackable createDuck(String type)
-    {
-        type = type.toLowerCase();
-        if ("mallard".equals(type)) {
-            return new MallardDuck();
-        } else if ("redhead".equals(type)) {
-            return new RedheadDuck();
-        } else {
-            throw new IllegalArgumentException("Invalid Duck type: " + type);
-        }
-    }
+    Quackable createMallardDuck();
+    Quackable createRedheadDuck();
 }
 
 
-class CountingDuckFactory
+class DuckFactory implements AbstractDuckFactory
 {
-    public static Quackable createDuck(String type)
-    {
-        type = type.toLowerCase();
-        if ("mallard".equals(type)) {
-            return new QuackyDuck(new MallardDuck());
-        } else if ("redhead".equals(type)) {
-            return new QuackyDuck(new RedheadDuck());
-        } else {
-            throw new IllegalArgumentException("Invalid Duck type: " + type);
-        }
+    @Override
+    public Quackable createMallardDuck() { return new MallardDuck(); }
+
+    @Override
+    public Quackable createRedheadDuck() { return new RedheadDuck(); }
+}
+
+class CountingDuckFactory implements AbstractDuckFactory {
+
+    @Override
+    public Quackable createMallardDuck() {
+        return new QuackyDuck(new MallardDuck());
+    }
+
+    @Override
+    public Quackable createRedheadDuck() {
+        return new QuackyDuck(new RedheadDuck());
     }
 }
+
 
 
 
